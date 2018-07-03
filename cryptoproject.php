@@ -4,7 +4,6 @@ include 'src/pubkey.php';
 starting_program();
 
 function firstChoice(){
-	
         $pattern = readline("Entrez une suite super croissante :   \n");
        	preg_match_all("([0-9]+)", $pattern, $matches);
 		if(count($matches[0]) == NULL)
@@ -20,12 +19,26 @@ function firstChoice(){
 			$pubkey = finalPubkey($matches[0], $E, $M);
 			echo "votre clefs public à bien été généré !\n\n";
 		}
+		$_SESSION['public_key'] = $pubkey;
 		starting_program();
 		return $pubkey;
 }
 
 function secondChoice(){
-	print("2");
+	 //Enter the message to crypt
+	 $binarymsg = array();
+	 $pattern = readline("Entrez le message que vous souhaitez crypter : \n");
+	 //Find n
+	 $n = readline("Choisissez un nombre n compris entre 2 et " . strlen($pattern) ." : \n");
+	 if($n > strlen($pattern) || $n < 2){
+	 print("Erreur le nombre n ne correspond pas aux critères !!!! \n");
+	 secondChoice();
+	 }
+	 for($i=0; strlen($pattern)>$i; $i++){
+    	 $binarymsg[] = decbin(ord($pattern[$i]));
+	 }
+	 print_r($binarymsg);
+	 
 }
 
 function thirdChoice(){
