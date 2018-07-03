@@ -30,14 +30,36 @@ function getE($M)
         return $E;
 }
 
-function finalPubkey($array, $E, $M)
+function intermediateKey($array, $E, $M)
 {
     foreach ($array as &$value) {
         $value = modulo(($value * $E), $M); //coder son modulo c'est propre de ouf dans le code ouai ouai
     }
     unset($value);
+    return $array;
+}
+
+function finalPubkey($array)
+{
     sort($array, SORT_NUMERIC);
     return $array;
+}
+
+
+function permutation($intermediateKey, $publicKey)
+{
+    $P = [];
+    foreach($intermediateKey as $value)
+    {
+        $i = 0;
+
+        while($value != $publicKey[$i])
+        {
+            $i++;
+        }
+        array_push($P, $i + 1);
+    }
+    return $P;
 }
 
 ?>

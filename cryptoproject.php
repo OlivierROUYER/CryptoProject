@@ -14,10 +14,11 @@ function firstChoice(){
         }
         else
         {
-			var_dump($matches[0]);
 			$M = getM($matches[0]);
 			$E = getE($M);
-			$pubkey = finalPubkey($matches[0], $E, $M);
+			$intermediatekey = intermediateKey($matches[0], $E, $M);
+			$pubkey = finalPubkey($intermediatekey);
+			$P = permutation($intermediatekey, $pubkey);
 			echo "votre clefs public à bien été généré !\n\n";
 		}
 		starting_program();
@@ -25,11 +26,11 @@ function firstChoice(){
 }
 
 function secondChoice(){
-	print("2");
+	echo 2;
 }
 
 function thirdChoice(){
-	print("3");
+	echo 3;
 }
 
 function starting_program()
