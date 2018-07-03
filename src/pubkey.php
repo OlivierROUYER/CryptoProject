@@ -1,8 +1,6 @@
 <?php
 include 'math.php';
 
-$array = [1, 2, 5, 10, 20, 50, 100, 200];
-
 function getM($array)
 {
     $minM = array_sum($array);
@@ -32,7 +30,7 @@ function getE($M)
         return $E;
 }
 
-function finalePubkey($array, $E, $M)
+function finalPubkey($array, $E, $M)
 {
     foreach ($array as &$value) {
         $value = modulo(($value * $E), $M); //coder son modulo c'est propre de ouf dans le code ouai ouai
