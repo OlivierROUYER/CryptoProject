@@ -25,21 +25,35 @@ function firstChoice(){
 		starting_program();
 }
 
+
 function secondChoice(){
 	 //Enter the message to crypt
 	 $binarymsg = array();
 	 $pattern = readline("Entrez le message que vous souhaitez crypter : \n");
 	 //Find n
-	 $n = readline("Choisissez un nombre n compris entre 2 et " . strlen($pattern) ." : \n");
-	 if($n > strlen($pattern) || $n < 2){
+	 /*if(is_null($_SESSION['public_key']))
+	 {
+		print("Aucune clef publique trouvé veuillez en entrée une (retour étape 1) : \n");
+		firstChoice();
+	 }*/
+	 $_SESSION['public_key'] = "fromage de bite";
+	 $n = readline("Choisissez un nombre n compris entre 2 et " . strlen($_SESSION['public_key']) ." : \n");
+	 if($n > strlen($_SESSION['public_key']) || $n < 2)
+	 {
 	 print("Erreur le nombre n ne correspond pas aux critères !!!! \n");
 	 secondChoice();
 	 }
-	 for($i=0; strlen($pattern)>$i; $i++){
+	 //Convertion en binaire
+	 for($i=0; strlen($pattern)>$i; $i++)
+	 {
     	 $binarymsg[] = decbin(ord($pattern[$i]));
 	 }
-	 print_r($binarymsg);
-	 
+	 // Mise sous format de l'array en string
+	 $binarymsg = implode('',$binarymsg);
+	 //print_r($binarymsg);
+	 $binarymsg = trim($binarymsg);
+	 $binarymsg = wordwrap($binarymsg, $n, ' ');
+	 print($binarymsg);
 }
 
 function thirdChoice(){
