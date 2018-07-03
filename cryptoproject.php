@@ -1,5 +1,6 @@
 <?php
 include 'src/pubkey.php';
+include 'src/chiffrement.php';
 
 starting_program();
 
@@ -8,7 +9,7 @@ function firstChoice(){
        	preg_match_all("([0-9]+)", $pattern, $matches);
 		if(count($matches[0]) == NULL)
 		{
-			print("Erreur aucune clef ne peut être générée par la chaine rentrée   \n");
+			echo "Erreur aucune clef ne peut être générée par la chaine rentrée   \n";
 			firstChoice();
         }
         else
@@ -21,7 +22,7 @@ function firstChoice(){
 			echo "\nFélicitation, votre clefs public est " . implode($pubkey) . " ! \n";
 			echo "Et votre permutation est " . implode(" ", $P) . "\n\n";
 		}
-		$_SESSION['public_key'] = $pubkey;
+		$_GLOBAL['public_key'] = $pubkey;
 		starting_program();
 }
 
@@ -36,24 +37,21 @@ function secondChoice(){
 		print("Aucune clef publique trouvé veuillez en entrée une (retour étape 1) : \n");
 		firstChoice();
 	 }*/
-	 $_SESSION['public_key'] = "fromage de bite";
-	 $n = readline("Choisissez un nombre n compris entre 2 et " . strlen($_SESSION['public_key']) ." : \n");
-	 if($n > strlen($_SESSION['public_key']) || $n < 2)
+	 $_GLOBAL['public_key'] = array(251,255,312,412,462,492,502);
+	 $n = readline("Choisissez un nombre n compris entre 2 et " . strlen($_GLOBAL['public_key']) ." : \n");
+	 if($n > strlen($_GLOBAL['public_key']) || $n < 2)
 	 {
-	 print("Erreur le nombre n ne correspond pas aux critères !!!! \n");
+	 echo "Erreur le nombre n ne correspond pas aux critères !!!! \n";
 	 secondChoice();
 	 }
-	 //Convertion en binaire
-	 for($i=0; strlen($pattern)>$i; $i++)
-	 {
-    	 $binarymsg[] = decbin(ord($pattern[$i]));
-	 }
 	 // Mise sous format de l'array en string
-	 $binarymsg = implode('',$binarymsg);
-	 //print_r($binarymsg);
-	 $binarymsg = trim($binarymsg);
-	 $binarymsg = wordwrap($binarymsg, $n, ' ');
-	 print($binarymsg);
+	 $binarymsg = chiffrementpattern($pattern, $n);
+	 $binaryarray = array();
+	 /*while(){
+
+	 }*/
+	 var_dump($binarymsg);
+
 }
 
 function thirdChoice(){
@@ -62,11 +60,11 @@ function thirdChoice(){
 
 function starting_program()
 {
-	print("Bienvenu sur Crypto Program de Alexandre et Olivier, \n pour une aide quelconque veuillez taper --help dans le prompt \n");
-	print("Appuyez sur : \n 
+	echo "Bienvenu sur Crypto Program de Alexandre et Olivier, \n pour une aide quelconque veuillez taper --help dans le prompt \n";
+	echo "Appuyez sur : \n 
 	1 : Génération d'une clé publique \n
 	2 : Chiffrement d'un message \n
-	3 : Déchiffrement d'un message \n");
+	3 : Déchiffrement d'un message \n";
 	$array = array( 1 => "first", 2 => "second" , 3 => "third");
 	$pattern = readline("\nEntrez votre choix : ");
 	$function = $array[$pattern]."Choice";
