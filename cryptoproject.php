@@ -19,10 +19,10 @@ function firstChoice(){
 			$intermediatekey = intermediateKey($matches[0], $E, $M);
 			$pubkey = finalPubkey($intermediatekey);
 			$P = permutation($intermediatekey, $pubkey);
-			echo "votre clefs public à bien été généré !\n\n";
+			echo "\nFélicitation, votre clefs public est " . implode($pubkey) . " ! \n";
+			echo "Et votre permutation est " . implode(" ", $P) . "\n\n";
 		}
 		starting_program();
-		return $pubkey;
 }
 
 function secondChoice(){
@@ -41,7 +41,7 @@ function starting_program()
 	2 : Chiffrement d'un message \n
 	3 : Déchiffrement d'un message \n");
 	$array = array( 1 => "first", 2 => "second" , 3 => "third");
-	$pattern = readline("Entrez votre choix : ");
+	$pattern = readline("\nEntrez votre choix : ");
 	$function = $array[$pattern]."Choice";
 	$function();
 }
