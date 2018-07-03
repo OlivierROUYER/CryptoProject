@@ -13,15 +13,16 @@ function firstChoice(){
         }
         else
         {
-			var_dump($matches[0]);
 			$M = getM($matches[0]);
 			$E = getE($M);
-			$pubkey = finalPubkey($matches[0], $E, $M);
-			echo "votre clefs public à bien été généré !\n\n";
+			$intermediatekey = intermediateKey($matches[0], $E, $M);
+			$pubkey = finalPubkey($intermediatekey);
+			$P = permutation($intermediatekey, $pubkey);
+			echo "\nFélicitation, votre clefs public est " . implode($pubkey) . " ! \n";
+			echo "Et votre permutation est " . implode(" ", $P) . "\n\n";
 		}
 		$_SESSION['public_key'] = $pubkey;
 		starting_program();
-		return $pubkey;
 }
 
 function secondChoice(){
@@ -42,7 +43,7 @@ function secondChoice(){
 }
 
 function thirdChoice(){
-	print("3");
+	echo 3;
 }
 
 function starting_program()
@@ -53,7 +54,7 @@ function starting_program()
 	2 : Chiffrement d'un message \n
 	3 : Déchiffrement d'un message \n");
 	$array = array( 1 => "first", 2 => "second" , 3 => "third");
-	$pattern = readline("Entrez votre choix : ");
+	$pattern = readline("\nEntrez votre choix : ");
 	$function = $array[$pattern]."Choice";
 	$function();
 }
