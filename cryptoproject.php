@@ -37,7 +37,7 @@ function secondChoice(){
 		print("Aucune clef publique trouvé veuillez en entrée une (retour étape 1) : \n");
 		firstChoice();
 	 }*/
-	 $_GLOBAL['public_key'] = array(251,255,312,412,462,492,502);
+	 $_GLOBAL['public_key'] = array(251,255,312,412,462,492,502,510);
 	 $n = readline("Choisissez un nombre n compris entre 2 et " . count($_GLOBAL['public_key']) ." : \n");
 	 if($n > count($_GLOBAL['public_key']) || $n < 2)
 	 {
@@ -46,16 +46,21 @@ function secondChoice(){
 	 }
 	 // Mise sous format de l'array en string
 	 $binarymsg = chiffrementpattern($pattern, $n);
-	 $binaryassiociative = array();
-	 $k = 1;
-	 for($i = 0; $i != $n ; $i++)
-	 {
-		$binaryassiociative += [$_GLOBAL['public_key'][$i] => str_pad(decbin($k),6,'0',STR_PAD_LEFT)];
-		$k = $k  * 2;
+	 $crypt = array();
+	 for($i = 0; $i != count($binarymsg) ;$i++){
+		 preg_match_all("([01])", $binarymsg[$i], $matches);
+		 $cryptnb = 0;
+		 $matches[0] = array_reverse($matches[0]);
+		 	for($k = 0; $k != count($matches[0]); $k++){
+				if($matches[0][$k] == "1"){
+					$cryptnb += $_GLOBAL['public_key'][$k];
+					print($k . "   " . $_GLOBAL['public_key'][$k] . "\n");
+				}
+			 }
+		array_push($crypt, $cryptnb);
 	 }
 	 var_dump($binarymsg);
-	 var_dump($binaryassiociative);
-
+	 var_dump($crypt);
 }
 
 function thirdChoice(){
@@ -71,6 +76,10 @@ function starting_program()
 	3 : Déchiffrement d'un message \n";
 	$array = array( 1 => "first", 2 => "second" , 3 => "third");
 	$pattern = readline("\n	Entrez votre choix : ");
+	if($pattern != ( 1 || 2 || 3)){
+		echo "------------------------  MAUVAISE SAISIE !!!!! ----------------------------\n";
+		starting_program();
+	}
 	$function = $array[$pattern]."Choice";
 	$function();
 }
