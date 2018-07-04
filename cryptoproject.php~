@@ -60,7 +60,6 @@ function secondChoice(){
 		array_push($crypt, $cryptnb);
 	 }
 	 var_dump($binarymsg);
-	 //array final avec les valeurs
 	 var_dump($crypt);
 }
 
