@@ -2,13 +2,12 @@
 
 function chiffrementpattern($pattern, $n)
 {
-    var_dump($pattern);
+    //var_dump($pattern);
     for($i=0; strlen($pattern)>$i; $i++)
         {
             $binarymsg[] = "0" . decbin(ord($pattern[$i]));
         }
         // Mise sous format de l'array en string
-        var_dump($binarymsg);
         $binarymsg = str_split(trim(implode($binarymsg)), $n);
         $endarray = array_pop($binarymsg);
         $missingchar =  $n - strlen($endarray);
@@ -21,7 +20,6 @@ function chiffrementpattern($pattern, $n)
            // var_dump($endarray);
             array_push($binarymsg, $endarray);
         }
-        //var_dump($binarymsg);
         return $binarymsg;
 }
 ?>

@@ -38,19 +38,23 @@ function secondChoice(){
 		firstChoice();
 	 }*/
 	 $_GLOBAL['public_key'] = array(251,255,312,412,462,492,502);
-	 $n = readline("Choisissez un nombre n compris entre 2 et " . strlen($_GLOBAL['public_key']) ." : \n");
-	 if($n > strlen($_GLOBAL['public_key']) || $n < 2)
+	 $n = readline("Choisissez un nombre n compris entre 2 et " . count($_GLOBAL['public_key']) ." : \n");
+	 if($n > count($_GLOBAL['public_key']) || $n < 2)
 	 {
 	 echo "Erreur le nombre n ne correspond pas aux critères !!!! \n";
 	 secondChoice();
 	 }
 	 // Mise sous format de l'array en string
 	 $binarymsg = chiffrementpattern($pattern, $n);
-	 $binaryarray = array();
-	 /*while(){
-
-	 }*/
+	 $binaryassiociative = array();
+	 $k = 1;
+	 for($i = 0; $i != $n ; $i++)
+	 {
+		$binaryassiociative += [$_GLOBAL['public_key'][$i] => str_pad(decbin($k),6,'0',STR_PAD_LEFT)];
+		$k = $k  * 2;
+	 }
 	 var_dump($binarymsg);
+	 var_dump($binaryassiociative);
 
 }
 
@@ -66,7 +70,7 @@ function starting_program()
 	2 : Chiffrement d'un message \n
 	3 : Déchiffrement d'un message \n";
 	$array = array( 1 => "first", 2 => "second" , 3 => "third");
-	$pattern = readline("\nEntrez votre choix : ");
+	$pattern = readline("\n	Entrez votre choix : ");
 	$function = $array[$pattern]."Choice";
 	$function();
 }
