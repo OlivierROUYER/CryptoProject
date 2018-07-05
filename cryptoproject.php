@@ -45,11 +45,12 @@ function secondChoice(){
 	 echo "Erreur le nombre n ne correspond pas aux critères !!!! \n";
 	 secondChoice();
 	 }
+
 	 // Mise sous format de l'array en string
 	 $binarymsg = chiffrementpattern($pattern, $n);
 	 $crypt = associateBinary($binarymsg);
-	 //array final avec les valeurs
-	 var_dump($crypt);
+	 $_GLOBAL['N'] = $n;
+	 $_GLOBAL['crypt_msg'] = $crypt;
 }
 
 function thirdChoice(){
