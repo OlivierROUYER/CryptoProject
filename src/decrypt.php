@@ -84,17 +84,16 @@ function useBinEquivalence($msgChanged, $equArray)
 {
     krsort($equArray);
     $binaryArray = [];
-    $equArray = array_reverse($equArray);
+    var_dump($equArray);
     foreach($msgChanged as $msg)
     {
         foreach($equArray as $key => $value)
         {
-            echo $key . "\n";
-            echo $value . "\n";
-            if(($msg - $key) > 0)
-            {                
+            
+            if(($msg - $key) >= 0)
+            {              
                 $msg = $msg - $key;
-                array_push($binaryArray,$value);
+                array_push($binaryArray, array($value));
             }           
             elseif($msg == 0)
             {
