@@ -22,7 +22,7 @@ function inv_modulo($a, $n)
     for ($i = 2; $i <= $n; $i++)
     {
         if (modulo(($i * $a), $n) == 1)
-            return ($i);
+            return $i;
     }
 }
 
@@ -40,5 +40,9 @@ function pgcd($a, $b)
     }
     return $b;
 }
+
+
+
+
 
 ?>
