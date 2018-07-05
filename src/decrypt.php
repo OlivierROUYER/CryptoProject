@@ -58,58 +58,63 @@ function equivalentBinaire($S2permuted, $N) //donne un equialent binaire à S2 p
     return $array;
 }
 
-// function useBinEquivalence($msgChanged, $equArray)
-// {
-//     var_dump($equArray);
-//     krsort($equArray);
-//     var_dump($equArray);
-//     $binaryArray = array();
-//     $equArray = array_reverse($equArray);
-//     foreach($msgChanged as $msg)
-//     {
-//         for($i= 0; count($equArray) != $i; $i++ ){
-//             print("eqrray : " . key($equArray[$i]) . "\n");
-//             if($msg - $equArray[$i] > 0 || $msg - $equArray[$i] == 0){
-//                  $msg -= $equArray[$i];
-//                  print($i . ": msg " . $msg . "\n");
-//     //            $binaryArray += [$msg => $equArray[$i]];
-//              }
-//          }
-//      }
-//     //var_dump($binaryArray);
-// }
-
-
-function useBinEquivalence($msgChanged, $equArray)
+function useBinEquivalence($msgChanged, $equArray, $N)
 {
     krsort($equArray);
-    $binaryArray = [];
-    var_dump($equArray);
+    $binaryArray = array();
     foreach($msgChanged as $msg)
     {
+        $bin = NULL;
         foreach($equArray as $key => $value)
         {
-            $bin = NULL;
             if(($msg - $key) >= 0)
             {              
                 $msg = $msg - $key;
-                // array_push($binaryArray, array($value));
+                $value = intval($value);
                 
+                $bin += bindec($value);
             }           
-            elseif($msg == 0)
+            if($msg == 0)
             {
-                echo $msg . "moustafa ----------\n";
+                $bin = decbin($bin);
+                $decal = $N - strlen($bin);
+                $tmp = NULL;
+                while ($decal > 0)
+                {
+                    $tmp = $tmp . "0"; 
+                    $decal -= 1;
+                }
+                $bin = $tmp . $bin;
+                array_push($binaryArray, $bin);
                 break;
             }
-        }    
+        }
     }
-    var_dump($binaryArray);
+        return $binaryArray;
+}
+
+function convertToChar($binaryArray)
+{
+    $binaryArray = implode($binaryArray);
+    $binaryArray = str_split($binaryArray, 8);
+    if (modulo(strlen(end($binaryArray)), 8) != 0)
+        array_pop($binaryArray);
+
+    $char = NULL;
+    foreach($binaryArray as $bin)
+    {
+        
+        $char .= chr(bindec($bin));
+        
+    }
+    return $char;
 }
 
 $msgChanged = (changMessage($message, $D, $M));
 $S2 = permutePrivateKey($secret, $P);
 $equArray = equivalentBinaire($S2, $N);
 
-useBinEquivalence($msgChanged, $equArray);
+$tobeconvert = useBinEquivalence($msgChanged, $equArray, $N);
+convertToChar($tobeconvert);
 
 ?>
