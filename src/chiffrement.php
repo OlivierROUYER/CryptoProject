@@ -33,15 +33,15 @@ function associateBinary($binarymsg)
      {
 		 preg_match_all("([01])", $binarymsg[$i], $matches);
 		 $cryptnb = 0;
-		 var_dump($_GLOBAL['public_key']);
+		 //var_dump($_GLOBAL['public_key']);
 		 $matches[0] = array_reverse($matches[0]);
              for($k = 0; $k != count($matches[0]); $k++)
              {
                 if($matches[0][$k] == "1")
                 {
 					$cryptnb += $_GLOBAL['public_key'][$k];
-					var_dump($matches[0]);
-					print($k . "   " . $_GLOBAL['public_key'][$k] . "\n");
+					//var_dump($matches[0]);
+					//print($k . "   " . $_GLOBAL['public_key'][$k] . "\n");
 				}
 			 }
 		array_push($crypt, $cryptnb);
