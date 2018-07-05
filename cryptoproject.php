@@ -23,7 +23,7 @@ function firstChoice(){
 			echo "Et votre permutation est " . implode(" ", $P) . "\n\n";
 		}
 		//writeInfile($pubkey, "public_key");
-		$_GLOBAL['public_key'] = $pubkey;
+		$GLOBAL['public_key'] = $pubkey;
 		starting_program();
 }
 
@@ -33,13 +33,13 @@ function secondChoice(){
 	 $binarymsg = array();
 	 $pattern = readline("Entrez le message que vous souhaitez crypter : \n");
 	 //Find n
-	 if(!isset($_GLOBAL['public_key']))
+	 if(!isset($GLOBAL['public_key']))
 	 {
 		print("Aucune clef publique trouvé veuillez en entrée une (retour étape 1) : \n");
-		$_GLOBAL['public_key'] = readline("Entrez une suite super croissante : \n");
+		$GLOBAL['public_key'] = readline("Entrez une suite super croissante : \n");
 	 }
-	 $_GLOBAL['public_key'] = array(251,255,312,412,462,492,502,510);
-	 $n = readline("Choisissez un nombre n compris entre 2 et " . count($_GLOBAL['public_key']) ." : \n");
+	 $GLOBAL['public_key'] = array(251,255,312,412,462,492,502,510);
+	 $n = readline("Choisissez un nombre n compris entre 2 et " . count($GLOBAL['public_key']) ." : \n");
 	 if($n > count($_GLOBAL['public_key']) || $n < 2)
 	 {
 	 echo "Erreur le nombre n ne correspond pas aux critères !!!! \n";
@@ -49,8 +49,8 @@ function secondChoice(){
 	 // Mise sous format de l'array en string
 	 $binarymsg = chiffrementpattern($pattern, $n);
 	 $crypt = associateBinary($binarymsg);
-	 $_GLOBAL['N'] = $n;
-	 $_GLOBAL['crypt_msg'] = $crypt;
+	 $GLOBAL['N'] = $n;
+	 $GLOBAL['crypt_msg'] = $crypt;
 }
 
 function thirdChoice(){

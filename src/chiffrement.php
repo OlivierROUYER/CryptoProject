@@ -28,7 +28,7 @@ function chiffrementpattern($pattern, $n)
 function associateBinary($binarymsg)
 {
     $crypt = array();
-    $_GLOBAL['public_key'] = array(251,255,312,412,462,492,502,510);
+    $GLOBAL['public_key'] = array(251,255,312,412,462,492,502,510);
      for($i = 0; $i != count($binarymsg) ;$i++)
      {
 		 preg_match_all("([01])", $binarymsg[$i], $matches);
