@@ -89,11 +89,12 @@ function useBinEquivalence($msgChanged, $equArray)
     {
         foreach($equArray as $key => $value)
         {
-            
+            $bin = NULL;
             if(($msg - $key) >= 0)
             {              
                 $msg = $msg - $key;
-                array_push($binaryArray, array($value));
+                // array_push($binaryArray, array($value));
+                
             }           
             elseif($msg == 0)
             {
