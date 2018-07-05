@@ -1,6 +1,7 @@
 <?php
 include 'src/pubkey.php';
 include 'src/chiffrement.php';
+include 'src/decrypt.php';
 
 starting_program();
 
@@ -23,7 +24,11 @@ function firstChoice(){
 			echo "Et votre permutation est " . implode(" ", $P) . "\n\n";
 		}
 		//writeInfile($pubkey, "public_key");
-		$_GLOBAL['public_key'] = $pubkey;
+		$GLOBALS['public_key'] = $pubkey;
+		$GLOBALS['M'] = $M;
+		$GLOBALS['E'] = $E;
+		$GLOBALS['P'] = $P;
+		$GLOBALS['privateKey'] = $matches[0];
 		starting_program();
 }
 
@@ -33,14 +38,14 @@ function secondChoice(){
 	 $binarymsg = array();
 	 $pattern = readline("Entrez le message que vous souhaitez crypter : \n");
 	 //Find n
-	 if(!isset($_GLOBAL['public_key']))
+	 if(!isset($GLOBALS['public_key']))
 	 {
 		print("Aucune clef publique trouvé veuillez en entrée une (retour étape 1) : \n");
-		$_GLOBAL['public_key'] = readline("Entrez une suite super croissante : \n");
+		$GLOBALS['public_key'] = readline("Entrez une suite super croissante : \n");
 	 }
-	 $_GLOBAL['public_key'] = array(251,255,312,412,462,492,502,510);
-	 $n = readline("Choisissez un nombre n compris entre 2 et " . count($_GLOBAL['public_key']) ." : \n");
-	 if($n > count($_GLOBAL['public_key']) || $n < 2)
+	//  $GLOBALS['public_key'] = array(251,255,312,412,462,492,502,510);
+	 $n = readline("Choisissez un nombre n compris entre 2 et " . count($GLOBALS['public_key']) ." : \n");
+	 if($n > count($GLOBALS['public_key']) || $n < 2)
 	 {
 	 echo "Erreur le nombre n ne correspond pas aux critères !!!! \n";
 	 secondChoice();
@@ -49,12 +54,26 @@ function secondChoice(){
 	 // Mise sous format de l'array en string
 	 $binarymsg = chiffrementpattern($pattern, $n);
 	 $crypt = associateBinary($binarymsg);
-	 $_GLOBAL['N'] = $n;
-	 $_GLOBAL['crypt_msg'] = $crypt;
+	 $GLOBALS['N'] = $n;
+	 $GLOBALS['crypt_msg'] = $crypt;
+	 starting_program();
 }
 
 function thirdChoice(){
-	echo 3;
+	$M = $GLOBALS['M'];
+	$E = $GLOBALS['E'];
+	$P = $GLOBALS['P'];
+	$N = $GLOBALS['N'];
+	$secret = $GLOBALS['privateKey'];
+	$message = $GLOBALS['crypt_msg'];
+	$D = inv_modulo($E, $M);
+
+	$msgChanged = (changMessage($message, $D, $M));
+	$S2 = permutePrivateKey($secret, $P);
+	$equArray = equivalentBinaire($S2, $N);
+
+	$tobeconvert = useBinEquivalence($msgChanged, $equArray, $N);
+	echo "\nVotre message decrypté est ". convertToChar($tobeconvert) . "\n\n";
 }
 
 function starting_program()
@@ -64,12 +83,21 @@ function starting_program()
 	1 : Génération d'une clé publique \n
 	2 : Chiffrement d'un message \n
 	3 : Déchiffrement d'un message \n";
-	$array = array( 1 => "first", 2 => "second" , 3 => "third");
 	$pattern = readline("\n	Entrez votre choix : ");
-	if($pattern != ( 1 || 2 || 3)){
-		echo "------------------------  MAUVAISE SAISIE !!!!! ----------------------------\n";
-		starting_program();
+	switch($pattern)
+	{
+		case 1:
+			firstChoice();
+			break;
+		case 2:
+			secondChoice();
+			break;
+		case 3:
+			thirdChoice();
+			break;
+		default:
+			echo $pattern . " N'est pas une entrer valide. Veuillez entrez '1', '2' ou '3' \n";
 	}
-	$function = $array[$pattern]."Choice";
-	$function();
 }
+
+?>
