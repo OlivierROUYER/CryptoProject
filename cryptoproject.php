@@ -22,6 +22,7 @@ function firstChoice(){
 			echo "\nFélicitation, votre clefs public est " . implode($pubkey) . " ! \n";
 			echo "Et votre permutation est " . implode(" ", $P) . "\n\n";
 		}
+		//writeInfile($pubkey, "public_key");
 		$_GLOBAL['public_key'] = $pubkey;
 		starting_program();
 }
@@ -32,11 +33,11 @@ function secondChoice(){
 	 $binarymsg = array();
 	 $pattern = readline("Entrez le message que vous souhaitez crypter : \n");
 	 //Find n
-	 /*if(is_null($_SESSION['public_key']))
+	 if(!isset($_GLOBAL['public_key']))
 	 {
 		print("Aucune clef publique trouvé veuillez en entrée une (retour étape 1) : \n");
-		firstChoice();
-	 }*/
+		$_GLOBAL['public_key'] = readline("Entrez une suite super croissante : \n");
+	 }
 	 $_GLOBAL['public_key'] = array(251,255,312,412,462,492,502,510);
 	 $n = readline("Choisissez un nombre n compris entre 2 et " . count($_GLOBAL['public_key']) ." : \n");
 	 if($n > count($_GLOBAL['public_key']) || $n < 2)
@@ -46,20 +47,7 @@ function secondChoice(){
 	 }
 	 // Mise sous format de l'array en string
 	 $binarymsg = chiffrementpattern($pattern, $n);
-	 $crypt = array();
-	 for($i = 0; $i != count($binarymsg) ;$i++){
-		 preg_match_all("([01])", $binarymsg[$i], $matches);
-		 $cryptnb = 0;
-		 $matches[0] = array_reverse($matches[0]);
-		 	for($k = 0; $k != count($matches[0]); $k++){
-				if($matches[0][$k] == "1"){
-					$cryptnb += $_GLOBAL['public_key'][$k];
-					print($k . "   " . $_GLOBAL['public_key'][$k] . "\n");
-				}
-			 }
-		array_push($crypt, $cryptnb);
-	 }
-	 var_dump($binarymsg);
+	 $crypt = associateBinary($binarymsg);
 	 //array final avec les valeurs
 	 var_dump($crypt);
 }
