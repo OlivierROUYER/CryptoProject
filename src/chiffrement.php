@@ -4,7 +4,6 @@ function chiffrementpattern($pattern, $n)
 {
     for($i=0; strlen($pattern) > $i; $i++)
         {
-            //$decal = strlen(decbin(ord($pattern[$i]))) - 8;
             if(strlen(decbin(ord($pattern[$i]))) == 8){
                 $binarymsg[] = decbin(ord($pattern[$i]));
             }
@@ -21,14 +20,7 @@ function chiffrementpattern($pattern, $n)
                 $binarymsg[] = "0" . decbin(ord($pattern[$i]));
                 }
             }
-           /* while ($decal > 0)
-            {
-                $tmp = "0" . $tmp; 
-                $decal -= 1;
-            }*/
         }
-        var_dump($binarymsg);
-        // Mise sous format de l'array en string
         $binarymsg = str_split(implode($binarymsg), $n);
         $endarray = array_pop($binarymsg);
         $missingchar =  $n - strlen($endarray);
