@@ -8,12 +8,12 @@ starting_program();
 function firstChoice($isinfunc)
 {
 	echo "\n----------- Génération clef publique -----------\n\n";
-    $pattern = readline("Entrez une suite super croissante :   \n");
+	$pattern = readline("Entrez une suite super croissante :   \n");
     preg_match_all("([0-9]+)", $pattern, $matches);
-		if(count($matches[0]) == NULL || verifSuite($matches[0]) == 0)
+		if(count($matches[0]) == NULL || verifSuite($matches[0]) == 0 || ctype_alpha($pattern))
 		{
 			echo "Erreur aucune clef ne peut être générée par la chaine rentrée   \n";
-			return firstChoice();
+			firstChoice(1);
         }
         else
         {
