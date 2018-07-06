@@ -1,16 +1,5 @@
 <?php
 
-// include 'math.php';
-
-// $secret = [1,2,5,10,20,50,100,200];
-// $E = 255;
-// $M = 512;
-// $P = [2,8,1,7,6,5,4,3];
-// $N = 6;
-// $message = [774,563,663,563,774,312,1025,774,968,804,312];
-// $D =  inv_modulo($E, $M);
-
-
 function changMessage($message, $D, $M) 
 {
     foreach($message as &$value)
@@ -108,12 +97,5 @@ function convertToChar($binaryArray)
     }
     return $char;
 }
-
-// $msgChanged = (changMessage($message, $D, $M));
-// $S2 = permutePrivateKey($secret, $P);
-// $equArray = equivalentBinaire($S2, $N);
-
-// $tobeconvert = useBinEquivalence($msgChanged, $equArray, $N);
-// convertToChar($tobeconvert);
 
 ?>
