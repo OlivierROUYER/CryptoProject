@@ -20,10 +20,15 @@ function getM($array)
 {
     $minM = array_sum($array);
     $M = readline("Entrez M : ");
-    if($M <= $minM)
+    if (!is_numeric($M))
+    {
+        echo "M doit être un nombre\n";
+        return getM($array);
+    }
+    elseif($M <= $minM)
     {
         echo "veuillez entrer un entier plus grand que la somme des valeurs de votre suite \n\n";
-       return getM($array);
+        return getM($array);
     }
     return $M;
 }
@@ -31,7 +36,13 @@ function getM($array)
 function getE($M)
 {
     $E = readline("Entrez E : ");
-    if($E >= $M)
+
+    if (!is_numeric($M))
+    {
+        echo "E doit être un nombre\n";
+        return getE($array);
+    }
+    elseif($E >= $M)
     {
         echo "E doit être plus petit que " . $M . "\n";
         return getE($M);
