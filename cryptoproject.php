@@ -77,7 +77,7 @@ function thirdChoice()
 		print("\nAucune clef publique trouvé veuillez en entrée une (retour étape 1) : \n\n");
 		firstChoice(0);
 	}
-	elseif(!isset($GLOBALS['N']))
+	if(!isset($GLOBALS['N']))
 	{
 		echo "\nVeuillez crypter votre message avant de le décrypter (retour étape 2) : \n\n";
 		secondChoice(0);
