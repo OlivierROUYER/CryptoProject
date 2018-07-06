@@ -43,7 +43,6 @@ function secondChoice(){
 		print("Aucune clef publique trouvé veuillez en entrée une (retour étape 1) : \n");
 		$GLOBALS['public_key'] = readline("Entrez une suite super croissante : \n");
 	 }
-	//  $GLOBALS['public_key'] = array(251,255,312,412,462,492,502,510);
 	 $n = readline("Choisissez un nombre n compris entre 2 et " . count($GLOBALS['public_key']) ." : \n");
 	 if($n > count($GLOBALS['public_key']) || $n < 2)
 	 {
@@ -95,8 +94,11 @@ function starting_program()
 		case 3:
 			thirdChoice();
 			break;
+		case "--help":
+			echo "\n------------- voici de l'aide ----------- \n\n";
+			break;
 		default:
-			echo $pattern . " N'est pas une entrer valide. Veuillez entrez '1', '2' ou '3' \n";
+			echo "'". $pattern . "' N'est pas une entrer valide. Veuillez entrez '1', '2' ou '3' \n";
 	}
 }
 
