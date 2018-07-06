@@ -120,7 +120,8 @@ function starting_program()
 			thirdChoice();
 			break;
 		case "--help":
-			echo "\n------------- voici de l'aide ----------- \n\n";
+			echo "\n------------- HELP ----------- \n\n";
+			help();
 			break;
 		default:
 			echo "'". $pattern . "' N'est pas une entrer valide. Veuillez entrez '1', '2' ou '3' \n";
