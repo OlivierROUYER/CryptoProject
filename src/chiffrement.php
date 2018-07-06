@@ -2,7 +2,6 @@
 
 function chiffrementpattern($pattern, $n)
 {
-    //var_dump($pattern);
     for($i=0; strlen($pattern)>$i; $i++)
         {
             $binarymsg[] = "0" . decbin(ord($pattern[$i]));
@@ -17,7 +16,6 @@ function chiffrementpattern($pattern, $n)
                 $endarray .= "0" ;
                 $missingchar--;
             }
-           // var_dump($endarray);
             array_push($binarymsg, $endarray);
         }
         return $binarymsg;
@@ -28,20 +26,17 @@ function chiffrementpattern($pattern, $n)
 function associateBinary($binarymsg)
 {
     $crypt = array();
-    $GLOBAL['public_key'] = array(251,255,312,412,462,492,502,510);
+    // $GLOBAL['public_key'] = array(251,255,312,412,462,492,502,510);
      for($i = 0; $i != count($binarymsg) ;$i++)
      {
 		 preg_match_all("([01])", $binarymsg[$i], $matches);
 		 $cryptnb = 0;
-		 //var_dump($_GLOBAL['public_key']);
 		 $matches[0] = array_reverse($matches[0]);
              for($k = 0; $k != count($matches[0]); $k++)
              {
                 if($matches[0][$k] == "1")
                 {
 					$cryptnb += $GLOBALS['public_key'][$k];
-					//var_dump($matches[0]);
-					//print($k . "   " . $_GLOBAL['public_key'][$k] . "\n");
 				}
 			 }
 		array_push($crypt, $cryptnb);

@@ -1,6 +1,20 @@
 <?php
 include 'math.php';
 
+function verifSuite($array)
+{
+    $tmp = 0;
+    foreach($array as $value)
+    {
+        if ($value < $tmp)
+        {
+            echo "\nVeuillez entrer une suite super-croissante\n";
+            return 0;
+        }
+        $tmp += $value;  
+    }
+    return 1;
+}
 
 function getM($array)
 {
@@ -8,7 +22,7 @@ function getM($array)
     $M = readline("Entrez M : ");
     if($M <= $minM)
     {
-        echo "veuillez entrer un entier plus grand que la somme des valeurs de votre suite \n";
+        echo "veuillez entrer un entier plus grand que la somme des valeurs de votre suite \n\n";
        return getM($array);
     }
     return $M;

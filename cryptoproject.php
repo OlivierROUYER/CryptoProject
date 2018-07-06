@@ -8,10 +8,10 @@ starting_program();
 function firstChoice(){
         $pattern = readline("Entrez une suite super croissante :   \n");
        	preg_match_all("([0-9]+)", $pattern, $matches);
-		if(count($matches[0]) == NULL)
+		if(count($matches[0]) == NULL || verifSuite($matches[0]) == 0)
 		{
 			echo "Erreur aucune clef ne peut être générée par la chaine rentrée   \n";
-			firstChoice();
+			return firstChoice();
         }
         else
         {
@@ -37,17 +37,19 @@ function secondChoice(){
 	 //Enter the message to crypt
 	 $binarymsg = array();
 	 $pattern = readline("Entrez le message que vous souhaitez crypter : \n");
-	 //Find n
+
 	 if(!isset($GLOBALS['public_key']))
 	 {
 		print("Aucune clef publique trouvé veuillez en entrée une (retour étape 1) : \n");
 		$GLOBALS['public_key'] = readline("Entrez une suite super croissante : \n");
 	 }
+
 	 $n = readline("Choisissez un nombre n compris entre 2 et " . count($GLOBALS['public_key']) ." : \n");
+
 	 if($n > count($GLOBALS['public_key']) || $n < 2)
 	 {
-	 echo "Erreur le nombre n ne correspond pas aux critères !!!! \n";
-	 secondChoice();
+	 	echo "Erreur le nombre n ne correspond pas aux critères !!!! \n";
+	 	secondChoice();
 	 }
 
 	 // Mise sous format de l'array en string
@@ -55,10 +57,12 @@ function secondChoice(){
 	 $crypt = associateBinary($binarymsg);
 	 $GLOBALS['N'] = $n;
 	 $GLOBALS['crypt_msg'] = $crypt;
+	 echo "\nVotre message crypté est " . implode($crypt) . " et votre N est :" . $n . "\n";
 	 starting_program();
 }
 
-function thirdChoice(){
+function thirdChoice()
+{
 	$M = $GLOBALS['M'];
 	$E = $GLOBALS['E'];
 	$P = $GLOBALS['P'];
@@ -72,12 +76,13 @@ function thirdChoice(){
 	$equArray = equivalentBinaire($S2, $N);
 
 	$tobeconvert = useBinEquivalence($msgChanged, $equArray, $N);
-	echo "\nVotre message decrypté est ". convertToChar($tobeconvert) . "\n\n";
+	echo "\nVotre message decrypté est '". convertToChar($tobeconvert) . "'\n\n";
 }
 
 function starting_program()
 {
-	echo "Bienvenu sur Crypto Program de Alexandre et Olivier, \n pour une aide quelconque veuillez taper --help dans le prompt \n";
+	echo "\n-------------------------------------------------\n";
+	echo "\nBienvenu sur Crypto Program de Alexandre et Olivier, \nPour une aide quelconque veuillez taper --help dans le prompt \n\n";
 	echo "Appuyez sur : \n 
 	1 : Génération d'une clé publique \n
 	2 : Chiffrement d'un message \n
@@ -99,6 +104,7 @@ function starting_program()
 			break;
 		default:
 			echo "'". $pattern . "' N'est pas une entrer valide. Veuillez entrez '1', '2' ou '3' \n";
+			starting_program();
 	}
 }
 
