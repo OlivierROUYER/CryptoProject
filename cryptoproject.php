@@ -33,7 +33,7 @@ function firstChoice($isinfunc)
 		$GLOBALS['privateKey'] = $matches[0];
 
 		if ($isinfunc != 0)
-			starting_program();
+			return starting_program();
 }
 
 
@@ -66,7 +66,7 @@ function secondChoice($isinfunc)
 	 echo "\nVotre message crypté est " . implode($crypt) . " et votre N est :" . $n . "\n";
 
 	 if ($isinfunc != 0)
-			starting_program();
+			return starting_program();
 }
 
 function thirdChoice()
@@ -96,11 +96,12 @@ function thirdChoice()
 
 	$tobeconvert = useBinEquivalence($msgChanged, $equArray, $N);
 	echo "\nVotre message decrypté est '". convertToChar($tobeconvert) . "'\n\n";
+	return starting_program();
 }
 
 function starting_program()
 {
-	echo "\n-------------------------------------------------\n";
+	echo "\n------------------------ menu ------------------------\n";
 	echo "\nBienvenu sur Crypto Program de Alexandre et Olivier, \nPour une aide quelconque veuillez taper --help dans le prompt \n\n";
 	echo "Appuyez sur : \n 
 	1 : Génération d'une clé publique \n
