@@ -5,7 +5,7 @@ include 'src/decrypt.php';
 
 starting_program();
 
-function firstChoice(){
+function firstChoice($isinfunc){
         $pattern = readline("Entrez une suite super croissante :   \n");
        	preg_match_all("([0-9]+)", $pattern, $matches);
 		if(count($matches[0]) == NULL || verifSuite($matches[0]) == 0)
@@ -29,7 +29,9 @@ function firstChoice(){
 		$GLOBALS['E'] = $E;
 		$GLOBALS['P'] = $P;
 		$GLOBALS['privateKey'] = $matches[0];
-		starting_program();
+
+		if ($isinfunc != 0)
+			starting_program();
 }
 
 
@@ -41,15 +43,17 @@ function secondChoice(){
 	 if(!isset($GLOBALS['public_key']))
 	 {
 		print("Aucune clef publique trouvé veuillez en entrée une (retour étape 1) : \n");
-		$GLOBALS['public_key'] = readline("Entrez une suite super croissante : \n");
+		// $GLOBALS['public_key'] = readline("Entrez une suite super croissante : \n");
+		firstChoice(0);
 	 }
 
 	 $n = readline("Choisissez un nombre n compris entre 2 et " . count($GLOBALS['public_key']) ." : \n");
 
-	 if($n > count($GLOBALS['public_key']) || $n < 2)
+	 while($n > count($GLOBALS['public_key']) || $n < 2)
 	 {
-	 	echo "Erreur le nombre n ne correspond pas aux critères !!!! \n";
-	 	secondChoice();
+		 echo "\nErreur le nombre n ne correspond pas aux critères :/ \n";
+		 $n = readline("Choisissez un nombre n compris entre 2 et " . count($GLOBALS['public_key']) ." : \n");
+
 	 }
 
 	 // Mise sous format de l'array en string
@@ -91,7 +95,7 @@ function starting_program()
 	switch($pattern)
 	{
 		case 1:
-			firstChoice();
+			firstChoice(1);
 			break;
 		case 2:
 			secondChoice();
